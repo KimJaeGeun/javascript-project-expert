@@ -1,8 +1,8 @@
-
+import { scopeConfirm, checkArrayValue } from "./functions.js"
 
 function app() {
 
-    console.log(1);
+    checkArrayValue();
 }
 
 export default new app();
