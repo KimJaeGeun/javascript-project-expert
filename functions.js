@@ -51,4 +51,46 @@ function checkArrayValue() {
     console.log(testArray2.filter(item => item.includes("A2")));
 }
 
-export { scopeConfirm, checkArrayValue }
+// 얕은 복사, 깊은 복사 이해를 위한 함수
+function objFunc() {
+    const obj = {
+        a: "A1",
+        b: "B1",
+        c: "C1",
+        o: {
+            q: "Q",
+            w: "W"
+        }
+    };
+    const copyObj = Object.assign({}, obj);
+    // 복사된 객체 값 수정
+    copyObj.a = "A";
+    // 객체의 참조를 복사 => 얕은 복사
+    // 중첩된 객체내 객체의 복사 => 깊은 복사(실제 값을 복사)
+    // 중첩 객체의 경우 깊은 복사가 되지않는다.(얕은 복사로 인하여 참조된값을 수정시 원본객체의 값이 수정)
+    copyObj.o.q = "0";
+
+    console.log("copyObj")
+    console.log(copyObj);
+    console.log("obj")
+    console.log(obj);
+
+    // 전개 연산자를 통한 복사또한 객체내 객체의 깊은 복사가 이루어지지않음
+    //  Object.assign({}, {...obj})
+    const copyObj2 = {...obj };
+
+    copyObj2.o.q = "2";
+
+    console.log("copyObj2");
+    console.log(copyObj2);
+
+
+}
+
+function mapsFunc() {
+    const basicMap = new Map([, ["key", "value"]]);
+    console.log(basicMap);
+
+}
+
+export { scopeConfirm, checkArrayValue, objFunc, mapsFunc }
