@@ -11,8 +11,9 @@
     // 정수로 선언한 키값은 문자열로 변환된다.
     ```
 
-// 생성자 선언
-const testMap = new Map();
+
+> const testMap = new Map();
+
 - 인자로써 2차월배열([[key1, value1], [key2, value2]])을 삽입하여 초기화
 - 내장 메서드
     1. set: Map객체내 값 삽입
@@ -26,9 +27,17 @@ const testMap = new Map();
     
     4. clear: Map객체내 모든 값을 삭제
         - testMap.clear() // testMap.get("key1") -> undefined
-```
+
 - **Map객체를 반환하는 값은 맵이터레이터이다. (순회 가능한 객체)**
 - **동일 키에 값은 한개만 존재함(가장 마지막에 선언한 값을 가짐)**
 
 ## set
--
+- 중복되지않는 값으로 이루어진 배열을 반환하는 컬렉션
+```
+const colors = ["black", "red", "green", "black", "blue"]
+
+new Set(colors)
+// ["black", "red", "green", "blue"]
+```
+- 객체배열의 중복제거 처리
+

@@ -93,4 +93,59 @@ function mapsFunc() {
 
 }
 
-export { scopeConfirm, checkArrayValue, objFunc, mapsFunc }
+function setFunc() {
+    const testArray = [
+        {
+            name: "kjg",
+            age: 31,
+            food: "meat",
+            color: "red"
+        },
+        {
+            name: "kjg",
+            age: 31,
+            food: "fish",
+            color: "black"
+        },
+        {
+            name: "kjg",
+            age: 31,
+            food: "furuit",
+            color: "white"
+        },
+        {
+            name: "ceh",
+            age: 28,
+            food: "meat",
+            color: "violet"
+        },
+        {
+            name: "ceh",
+            age: 28,
+            food: "furuit",
+            color: "red"
+        },
+        {
+            name: "kjs",
+            age: 31,
+            food: "meat",
+            color: "red"
+        },
+        {
+            name: "kky",
+            age: 31,
+            food: "meat",
+            color: "black"
+        }
+    ];
+
+    const resultSet = new Set();
+
+    for (const item of testArray) {
+        resultSet.add(item.name)
+    }
+
+    console.log(resultSet);
+}
+
+export { scopeConfirm, checkArrayValue, objFunc, mapsFunc, setFunc }
