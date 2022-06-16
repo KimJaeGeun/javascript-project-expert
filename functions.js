@@ -88,7 +88,7 @@ function objFunc() {
 }
 
 function mapsFunc() {
-    const basicMap = new Map([, ["key", "value"]]);
+    const basicMap = new Map([["key", "value"]]);
     console.log(basicMap);
 
 }
@@ -126,25 +126,26 @@ function setFunc() {
             color: "red"
         },
         {
-            name: "kjs",
-            age: 31,
+            name: "ceh",
+            age: 28,
             food: "meat",
-            color: "red"
+            color: "violet"
         },
         {
-            name: "kky",
+            name: "kjg",
             age: 31,
-            food: "meat",
+            food: "fish",
             color: "black"
-        }
+        },
     ];
 
     const resultSet = new Set();
 
     for (const item of testArray) {
-        resultSet.add(item.name)
+        resultSet.add(item)
     }
-
+    // 객체는 참조형이므로 중복제거가 안된다.
+    // TODO: 객체배열내 중복제거
     console.log(resultSet);
 }
 
