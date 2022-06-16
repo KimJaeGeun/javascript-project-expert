@@ -149,4 +149,16 @@ function setFunc() {
     console.log(resultSet);
 }
 
-export { scopeConfirm, checkArrayValue, objFunc, mapsFunc, setFunc }
+// 단락평가
+function paragraphEvaluation() {
+    const temp = true;
+    // temp ? 1 : false
+    const result1 = temp && 1;
+    // temp ? temp : 1
+    const result2 = temp || 1;
+
+    console.log(result1);
+    console.log(result2);
+}
+
+export { scopeConfirm, checkArrayValue, objFunc, mapsFunc, setFunc, paragraphEvaluation }

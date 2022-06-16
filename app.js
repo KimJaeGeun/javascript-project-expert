@@ -1,8 +1,7 @@
-import { scopeConfirm, checkArrayValue, objFunc, mapsFunc, setFunc } from "./functions.js"
+import { scopeConfirm, checkArrayValue, objFunc, mapsFunc, setFunc, paragraphEvaluation } from "./functions.js"
 
 function app() {
-    mapsFunc();
-    setFunc();
+    paragraphEvaluation();
 }
 
 export default new app();
