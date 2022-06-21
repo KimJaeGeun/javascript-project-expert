@@ -161,4 +161,5 @@ function paragraphEvaluation() {
     console.log(result2);
 }
 
+
 export { scopeConfirm, checkArrayValue, objFunc, mapsFunc, setFunc, paragraphEvaluation }
