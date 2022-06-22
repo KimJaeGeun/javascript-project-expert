@@ -4,8 +4,11 @@
 ## 목차
 
 1. [타입](#타입)
-2. [](#)
+2. [조건문](#조건문)
 3. [반복문](#반복문)
+4. [this](#this)
+5. [객체](#객체)
+6. [동기, 비동기성](#동기-비동기성)
 
 
 
@@ -213,7 +216,91 @@
         - 기본 이터레이터를 지정하는 상용심볼
             - **상용심볼**: 특별한 용도를 위해 지정된 심볼
 
-##
+
+## 조건문
+
+- 개요
+    - 조건을 충족하는 가에 따라 실행여부를 판단하는 구문
+
+
+1. if
+    - if문내 조건을 충족시 실행문을 실행, 불충족시 실행하지않으며, 불충족시 실행되는 구문은 else구문이다.
+    - javascript내에서는 else if구문은 존재하지않으며, 관용적으로 else구문내 if문을 넣은 2중if문이다.
+    ```
+    if (true) {
+        // true일때 실행
+    } else {
+        // false일때 실행
+    }
+
+    - 이하의 코드는 서로 같은 코드이다/
+    if (조건1) {
+
+    } else if(조건2) {
+
+    }
+
+    if (조건1) {
+
+    } else {
+        if (조건2) {
+
+        }
+    }
+
+    ```
+
+2. switch
+    - switch의 조건문을 충족하는 case구문을 실행
+    - 조건이 타입형의 경우 엄격히 구분됨
+    - 상위case구문이 실행되는 경우 하위 case구문도 실행되기에 실행후 조건문실행을 중지할 경우 break, return등으로 탈출
+    - 모두 충족되지않을경우 실행되는 default구문이 있다.
+    ```
+    const value = 0;
+
+    switch() {
+        case 0: console.log('0') break;
+        case 1: console.log('1') break;
+        default: console.log('default') break;
+    }
+    ```
+
+3. 삼항 연산자
+    - 조건문 ? 조건충족 실행문 : 조건불충족 실행문
+    ```
+    2 > 0 ? console.log(실행) : console.log(실행 안됨)
+    ```
+
+4. 논리연산자 응용
+    - &&
+        - 비교논리가 값의 경우, 양쪽 값이 존재하는 경우 최우측단의 값이 반환
+        - 값이 부재하는 경우 false를 반환
+    - ||
+        - 비교논리가 값의 경우 존재하는 값이 반환
+        - 양쪽 값이 존재하는 경우 처음 존재하는 값이 반환
+        - 첫 비교값이 null, undefined인 경우 0을 반환
+    ```
+    console.log(10 && 'test')
+
+    출력값: 'test'
+
+    console.log(10 || 'test')
+
+    출력값: 10
+
+    ```
+
+### null 병합
+    - ||와 비슷하나 첫 비교값이 null, undefined인 경우 그 다음 값을 반환
+    ```
+    const test = undefined; //null
+    const testnull = test ?? 10;
+
+    console.log(testnull);
+
+    출력값: 10
+    ```
+
 
 ## 반복문
 
@@ -295,3 +382,311 @@
 
     - do의 실행문은 무조건 한번은 실행이 된다.
     ```
+
+
+## this
+
+- 개요
+    - 자기 참조 변수로 참조하는 객체, 생성되는 객체를 의미한다.
+    - this가 나타내는 것은 함수의 호출방식에 따라 달라진다.
+        - [참조](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/this#try_it)
+    - parseInt등의 함수가 실행되는 것은 기본적인 this는 암시적으로 window를 뜻한다.(console로 찍어보여는 순간 호출부가 정해지기에 undefined를 반환한다.)
+        - 명시적으로 globalThis가 있다.(ES11)
+        - globalThis === window
+    - window의 경우 타입, 기타 함수등의 객체를 모두 포함하고 있다.
+
+- 호출부의 바인딩 규칙
+    1. 기본바인딩
+    - this가 전역객체를 참조하게끔하는 것
+    - 엄격모드에서는 전역객체 참조가 불가하며, 이때this는 undefined를 반환한다.
+    2. 암시적 바인딩
+    - 호출부내 해당 객체의 소유/ 포함 여부 확인
+    - 함수를 객체안에 삽입하여 바인딩 하는 것
+    3. 명시적 바인딩
+    - 함수를 객체내 삽입하지않고 객체를 바인딩에 사용하는 것
+    - call(), apply()의 인수의 바인딩
+        - call()은 인수 리스트를 받고 함수를 실행
+        - apply()는 인수 단일 배열을 받고 함수를 실행
+    - 하드 바인딩
+        - 호출부와 상관없이 항상 특정 클로저를 바인딩 하는 것
+        - ES5부터는 bind()를 이용하여 가능
+    4. new 바인딩
+    - new를 사용한 생성자 호출시 새로 객체를 생성하며 생성된 객체의 함수 호출시 this로 바인딩 된다.
+    - 해당 this는 새 객체를 의미한다.
+
+- 어휘적 this
+    - 화살표 함수내에서는 스코프가 this를 의미한다.
+
+- bind(value)
+    - function의 내장함수로써 받는 value값은 해당 함수의 this를 지정하는 스코프역할을 한다.
+    - 함수내부에서 전역으로 지칭되어있는 스코프를 지정해줄 수 있다.
+    - 함수가 실행하기전 지정이 되며, 실행중에는 할당 할 수 없다.
+
+
+## 객체
+
+- 개요
+    - 객체의 정의는 리터럴 형식과 생성자 형식으로 나뉘어진다
+    - 리터럴 형식
+        - 다수의 키/값을 설정 가능
+        ```
+        const obj = {
+            key: value
+        };
+        ```
+    - 생성자 형식
+        - 한번에 하나의 프로퍼티 추가가능
+        ```
+        const obj = new testObj()
+        ```
+    - [객체의 타입](https://github.com/KimJaeGeun/javascript-project/tree/main/type)
+    - 객체가 지정될때 해당 객체의 타입값(프로퍼티)으로 이루어진다.
+    - **객체에 함수가 내장되는 것이 아니다. 해당 함수를 가르키는 프로퍼티가 존재하는 것**
+
+
+- 내장객체
+    - 자바스크립트내 내장 함수로써 생성자로 사용되며 하위타입의 새 객체를 생성
+    - 자바스크립트에서는 리터럴형식의 객체또한 해당 타입의 객체로 강제변환되므로, 명시적 객체생성은 필요없다(new로 만드는 거)
+        ```
+        "test".toUpperCase();
+        120.345.toFixed(2)
+        ```
+    - 종류
+        - String
+        - Number
+        - Boolean
+        - Object
+        - Function
+        - Array
+        - Date
+            - Date는 리터럴 형식이 없기때문에 항상 생성자로 생성해주어야 한다.
+        - RegExp
+        - Error
+            - 예외처리시 사용되는것이 대부분이기에 명시적 생성은 드물지만 생성자로도 생성은 가능하다.
+
+- 객체의 복사
+    - JSON객체로 복사
+        ```
+        JSON.parse(JSON.stringify(obj))
+        ```
+    - Object.assign()
+        - 열거 가능한 객체를 복사하여 해당객체와 병합
+        ```
+        Object.assign(targetObj,obj1, obj2...)
+        ```
+
+- 프로퍼티 서술자
+    - 해당 프로퍼티의 특성값을 나타낸 것
+    - 프로퍼티 특성값
+        1. writable(쓰기가능)
+            - 해당 프로퍼티의 값의 변경 여부
+        2. configurable(설정가능)
+            - true인 경우 Object.defineProperty() 사용하여프로퍼티 서술자를 변경 가능
+            - fasle인경우 writable의 값을 false로 변경은 가능하나 되돌리기는 불가하다.
+        3. enumerable(열거 가능)
+            - 루프문(for in과 같은)에서 객체 프로퍼티를 열거할때 사용가능 여부
+    - 프로퍼티의 특성값 확인
+        ```
+        Object.getOwnPropertyDescriptor(obj, 'key');
+        ```
+    - 프로퍼티의 특성값 정의
+        ```
+        const obj = {
+            aaa: 'abcdeFu'
+        }
+
+        setPropertyDescriptor(obj, 'aaa', true, false, false)
+
+        Object.getOwnPropertyDescriptor(obj, 'aaa')
+        ```
+
+- 객체간의 상속, 객체복사(mixin)
+    - 전제) 자바스크립트 내에서 이루어지는 상속과정에서 클래스(굳이 말하자면 객체복사)는 존재하지않는다. 유일한 생성자는 오로지 객체만이 존재한다.**(프로토타입 참조)**
+        - 상속과정은 객체를 복사하는 과정이나, 현재 자바스크립트 내에서 객체를 완벽하게 복사하는 방법은 없다.
+        - 해당 상속과정중 공용으로 사용되는 프로퍼티는 존재하기에 부모자식간에 영향이 있을 수 있다.
+    - 임의 객체를 상속하여 해당 프로퍼티를 부분적으로 사용할 수 있게끔 하는 것
+    ```
+    function basicMixin(target, source, property) {
+        const checkNull = isEmpty(target) || isEmpty(source);
+        const checkObj = typeof target === "object" && typeof source === "object"
+
+        if (isEmpty(property)) {
+            console.log("프로퍼티 부재");
+        }
+
+        if (checkNull || !checkObj) {
+            console.log("객체 부재")
+            return;
+        }
+
+        target[property] = source[property];
+
+        return target;
+    }
+    ```
+
+- 프로토타입
+    - 객체 내 존재하는 내부 프로퍼티
+    - **다른 객체를 참조하는 단순레퍼런스 역할을 한다.**
+        - 임의의 객체내 어느 프로퍼티를 참조하려는 경우 해당 프로퍼티를 못찾을 시 프로토타입을 통해 탐색을 한다.
+        ```
+        const obj = {
+            a: 1
+        }
+
+        obj.b = 'value'
+        // Object의 프로토타입 [[get]]을 통하여 프로퍼티b를 탐색 -> 직속 프로퍼티 b가 존재하지않을 경우 Object의 프로토타입 [[put]]을 통하여 직속 프로퍼티 b를 생성 및 값을 할당
+
+        // [[put]]의 작동 과정
+        // obj의 프로퍼티 서술자를 확인(쓰기가능)
+        // 2-1. 읽기전용이 아닌 경우는 직속프로퍼티 b를 생성 및 값을 대입
+        // 2-2. 읽기전용인 경우 에러가 발생하여 b가 생성되지않음
+        ```
+
+    - 상속이란 객체의 복사과정이지만 이는 복사가 아닌 프로토타입으로 연결하여 해당 객체의 프로퍼티/함수에 접근할 수 있게 하는 것이다.
+        ```
+        const copyObj = new obj();
+        // obj가 copyObj에 new로 할당되는 경우 객체 obj를 복사하는 것이 아닌 프로토타입으로 연결된 새로운 객체를 생성한다.
+        // 생성자가 아닌, 일반 함수에 new를 붙이는 경우 생성자 호출이 된다(해당 함수 호출 + 함수이름의 객체 생성)
+        ```
+
+
+## 동기, 비동기성
+
+
+- 개요
+    - 자바스크립트의 프로그램은 하나의 파일이 아닌, 여러개의 덩이(chunk)로 구성될 수 있으며 덩이의 일반적인 것은 함수이다.
+    - 순차적으로 덩이들이 처리완료된뒤, 다음 덩이를 처리하는 것 => 비동기성(일괄처리가 아니라는 뜻)
+    - 덩이가 처리되지않은 상태에서 넘어가며, 이후의 덩이를 처리하는 것 => 동기성(동시다발적으로 처리된다는 뜻)
+    - **자바스크립트 프로그램은 한번에 하나의 덩이 단위로 실행되어지지만, 연쇄적으로 동시적 실행이 되는 것처럼 보여지는 경우가 있다.<br>이러한 경우에 서로에게 영향을 주는 덩이가 존재한다면 순서를 보장해주는 조치가 필요하다 => 비동기성으로 만들기**
+
+- 콜백
+    - 어떤 함수가 실행이 끝난 뒤 실행되는 함수
+        - 아래의 예시는 함수run을 호출한뒤, 인자로 받은 speedCal, shout를 호출한다.<br> 이 경우 콜백함수는 speedCal, shout를 의미한다.
+        ```
+        const old = 18;
+
+        function speedCal() {
+            if (15 < old && old < 30) {
+                return old/2;
+            }
+            return 5;
+        }
+
+        function shout() {
+            console.log('호옹이!')
+        }
+
+        function run(who, speed, shout) {
+            console.log(`${who}가 초속${speed()}m 로 달린다`)
+            shout();
+        }
+
+        run('누군가', speedCal, shout);
+        ```
+
+- **콜백지옥(하지마라)**
+    - 콜백함수가 중첩적으로 쓰여진 코드
+    - 각각의 함수중 동기식이 적용이 된다면 코드의 실행단계가 달라지며 덩이에 영향이 심각하게 간다.
+    ```
+    function startHell(function(){
+        // hell-1
+        setTimeout(
+            //hell-2
+            function () {
+                //hell-3
+                console.log('여긴 지옥이야')
+            }, 5000);
+    }){
+
+    }
+    ```
+    - 후속함수는 필요한 시점에서 콜백지옥이 되지않게끔, 함수의 순차성을 확보하기위해 반드시 완전실행성을 보장받는 비동기성을 유지한다면?
+
+- promise
+    - 자바스크립트내에서 사용되는 비동기식 처리방식의 하나
+    - 아직 값이 특정되지않은 인자를 사용 할 시 사용되는 미래값 객체를 의미한다.
+    - promise이후의 과정은 비동기식으로 처리되나 promise자체 내부의 경우 동기식으로 처리된다.
+    - TODO: promise과정중 중간단계에서의 취소할 수 없다
+    - 인자로 resolve와 reject를 갖는다.
+        - resolve: 실행되는 콜백함수
+        - reject: 에러
+    - 3가지 상태를 갖는다
+        1. Pending(대기): 함수를 호출한 상태, 콜백함수 대기중
+        2. Fulfilled(이행): 함수를 실행하여 콜백함수가 호출, 실행된 상태(resolve호출)
+        3. Rejected(실패): reject를 사용한 상태, catch로 넘겨서 에러를 파악할 수 있다
+    - 해당 promise가 실행한 뒤 콜백으로 사용되는 함수
+        1. then(): promise객체를 가진 상태에서 콜백으로 사용되는 함수
+            - then으로 건내지는 콜백은 반드시 비동기로 처리되어 받는다.
+            - then내에서 인자를 사용하여 에러를 확인은 가능하나 그러는 의미가 없다.
+        2. catch(): reject() 메서드가 호출로,에러를 확인하는 함수
+    - catch()로 에러처리를 받으면 되나, 해당 에러처리내에서 출현하는 에러에 관하여는 처리가 어렵다.
+    -**Promise.allSettled()**
+        - promise().then().catch()의 경우 promise의 결과에 따라 then, catch를 실행하나, allSettled()의 경우에는 각각의 상태값을 배열로 나타낸다.
+        - catch()의 경우는 실행되지않으며, 각 promise의 상태를 then을 통하여 배열로 내보낸다.
+        ```
+        let promise1 = Promise.resolve("OK");
+        let promise2 = Promise.reject("Not OK");
+        let promise3 = Promise.resolve("After not ok");
+        Promise.allSettled([promise1, promise2, promise3])
+            .then((results) => console.log(results))
+            .catch((err) => console.log("error: " + err));
+        // [{status: 'fulfilled', value: 'OK'},
+            {status: 'rejected', reason: 'Not OK'},
+            {status: 'fulfilled', value: 'After not ok'}]
+        ```
+
+- 제너레이터
+    - 완전 실행 함수가 아닌 도중이 존재하는 함수
+    - **이터레이터**: 제너레이터 함수를 사용 할 수 있게끔 만든 객체
+        - 이터러블: 순회가능한 이터레이터객체
+        - [Symbol.iterator](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Symbol/iterator)
+            - 순회가 가능하며, 제너레이터함수 내에서는 yeild와의 조우가 함수의 도중을 의미하므로 함수스코프 내에서 상태값을 운용할 수 있다.
+            - while true문과 같지만 yeild로 일시정지가 된다는 점?
+    - 제너레이터 함수 사용 과정
+        1. 제너레이터 함수 ())을 선언
+            ```
+            function* name() {
+                yield;
+            }
+            ```
+        2. 해당 함수를 사용할 이터레이터를 선언
+            ```
+            const gen = name();
+            ```
+        3. 이터레이터에 실행 함수를 붙여 사용
+            - ex) next(), return(), throw()...
+        [참고](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Generator/next)
+    - next() 하나의 실행은 yeild 하나의 실행을 의미한다.
+        - next()실행 시 최초의 yeild를 실행한다.
+    - yeild는 해당 제너레이터의 도중의 return값을 의미하며, yeild값이 지정되지않은 경우 return;과도 같다.
+    - api 호출과 같은 비동기 함수를 제너레이터로 받은뒤, try catch로 해당 지점의 에러를 catch할 수 있다.
+        ```
+        // 비동기 호출 함수를 일단 받아두는 것
+        try {
+            // next()로 실행한뒤 일시 정지
+            const it = yield func();
+
+            console.log(it)
+
+        } catch(e) {
+            console.log('받은 뒤 문제가 있는것이라면?)
+        }
+        ```
+
+- **async / await**
+    - 상기의 Promise, Generator를 통해 비동기 로직을 작성하였으나 ES8부터 도입된 비동기코드 선언 구문
+    - async
+        - async function 객체를 반환하는 비동기 함수 선언식
+        - 화살표 함수에도 선언할 수 있다.
+        - 비동기 함수 선언식이므로, 비동기로써 yield부분을 await로 선언하여 사용한다.
+        - await없이 단독으로 사용 가능하다(허나 의미가 없다.)
+    - await
+        - async function내 promise를 yield해주는 역할
+        - 해당 Promise부분에 선언하여 사용
+        - 항상 async function내 사용 가능 하며, 외부인 경우 문법 오류가 발생
+    - 중첩이 가능 하며 복수의 promise를 awite할 수 있다.
+        - 이 경우 awaite하는 부분이 모두 완료된 후 다음 코드가 실행된다.
+
+    - **동적으로 모듈 가져오기**
+        - await import()로 async함수내에서 동적으로 사용
