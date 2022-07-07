@@ -9,6 +9,7 @@
 4. [this](#this)
 5. [객체](#객체)
 6. [동기, 비동기성](#동기-비동기성)
+7. [import, export](#import-export)
 
 
 
@@ -553,7 +554,6 @@
 
 ## 동기, 비동기성
 
-
 - 개요
     - 자바스크립트의 프로그램은 하나의 파일이 아닌, 여러개의 덩이(chunk)로 구성될 수 있으며 덩이의 일반적인 것은 함수이다.
     - 순차적으로 덩이들이 처리완료된뒤, 다음 덩이를 처리하는 것 => 비동기성(일괄처리가 아니라는 뜻)
@@ -688,5 +688,31 @@
     - 중첩이 가능 하며 복수의 promise를 awite할 수 있다.
         - 이 경우 awaite하는 부분이 모두 완료된 후 다음 코드가 실행된다.
 
-    - **동적으로 모듈 가져오기**
+    - **비동기 동적으로 모듈 가져오기**
         - await import()로 async함수내에서 동적으로 사용
+
+## import, export
+
+- import
+    - 다른 모듈에서 내보낸 바인딩을 가져올때 사용
+        ```
+        import name from 'module url'
+
+        ```
+        - node_module, 프레임워크내 존재하는 모듈이라면 해당 모듈파일의 위치가 아닌 모듈명으로 가져온다
+            ```
+            import { inject } from 'vue'
+
+            import { useRouter } from 'vue-router'
+
+            ```
+    - 정적 모듈 가져오기
+        ```
+        import module from 'module url'
+
+        ```
+    - 동적 모듈 가져오기
+        ```
+        import(module)
+
+        ```

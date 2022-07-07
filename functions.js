@@ -1,9 +1,11 @@
+import * as checkValue from "./checkValue.js";
+
 function scopeConfirm() {
     const item = document.getElementById("app");
 
     // const let var
     for (let i = 0; i < 4; i += 1) {
-        item.addEventListener('click', () => {
+        item.addEventListener("click", () => {
             alert(i);
         })
     }
@@ -161,5 +163,11 @@ function paragraphEvaluation() {
     console.log(result2);
 }
 
+// import test
+function importTest() {
+    const data = 1;
+    console.log(checkValue.isNumber(data))
+}
 
-export { scopeConfirm, checkArrayValue, objFunc, mapsFunc, setFunc, paragraphEvaluation }
+
+export { scopeConfirm, checkArrayValue, objFunc, mapsFunc, setFunc, paragraphEvaluation, importTest }
