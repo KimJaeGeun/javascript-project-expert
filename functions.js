@@ -1,4 +1,7 @@
-import * as checkValue from "./checkValue.js";
+// as: export default가 없는 것을 한데모아 객체로 사용하는 import
+import * as checkValue from "./util/checkValueType.js";
+// export default가 있는 것
+import testData from "./mapping/testData.js";
 
 function scopeConfirm() {
     const item = document.getElementById("app");
@@ -55,15 +58,8 @@ function checkArrayValue() {
 
 // 얕은 복사, 깊은 복사 이해를 위한 함수
 function objFunc() {
-    const obj = {
-        a: "A1",
-        b: "B1",
-        c: "C1",
-        o: {
-            q: "Q",
-            w: "W"
-        }
-    };
+    const obj = testData.obj;
+    
     const copyObj = Object.assign({}, obj);
     // 복사된 객체 값 수정
     copyObj.a = "A";
@@ -96,50 +92,7 @@ function mapsFunc() {
 }
 
 function setFunc() {
-    const testArray = [
-        {
-            name: "kjg",
-            age: 31,
-            food: "meat",
-            color: "red"
-        },
-        {
-            name: "kjg",
-            age: 31,
-            food: "fish",
-            color: "black"
-        },
-        {
-            name: "kjg",
-            age: 31,
-            food: "furuit",
-            color: "white"
-        },
-        {
-            name: "ceh",
-            age: 28,
-            food: "meat",
-            color: "violet"
-        },
-        {
-            name: "ceh",
-            age: 28,
-            food: "furuit",
-            color: "red"
-        },
-        {
-            name: "ceh",
-            age: 28,
-            food: "meat",
-            color: "violet"
-        },
-        {
-            name: "kjg",
-            age: 31,
-            food: "fish",
-            color: "black"
-        },
-    ];
+    const testArray = testData.testArray;
 
     const resultSet = new Set();
 

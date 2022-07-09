@@ -694,25 +694,63 @@
 ## import, export
 
 - import
-    - 다른 모듈에서 내보낸 바인딩을 가져올때 사용
-        ```
-        import name from 'module url'
-
-        ```
-        - node_module, 프레임워크내 존재하는 모듈이라면 해당 모듈파일의 위치가 아닌 모듈명으로 가져온다
+    - 개요  
+        - 다른 모듈에서 내보낸 바인딩을 가져올때 사용
             ```
-            import { inject } from 'vue'
-
-            import { useRouter } from 'vue-router'
+            import name from 'module_url';
 
             ```
-    - 정적 모듈 가져오기
-        ```
-        import module from 'module url'
+            - node_module, 프레임워크내 존재하는 모듈이라면 해당 모듈파일의 위치가 아닌 모듈명으로 가져온다
+                ```
+                import { inject } from 'vue';
 
-        ```
-    - 동적 모듈 가져오기
-        ```
-        import(module)
+                import { useRouter } from 'vue-router';
 
-        ```
+                ```
+    - 응용
+        - 정적 모듈 가져오기
+            ```
+            import module from 'module_url';
+            // 문자열로 이루어진 경로를 통하여 가져온 모듈을 한대모다 번들링 하기에 속도가 빠르다. (동적과 비교적)
+            // export default가 있는 모듈인 경우 imprt시 사용되는 이름은 임의로 생성이 가능하다
+
+            import { module1, module2 } from 'module_url';
+            // export로 이루어진 경우 객체내 요소로 할당받아 사용가능 하다.
+
+            import { module1 as m1, module2 as m1} from 'module_url';
+            // 요소로 할당받아 사용하는 경우 as를 통하여 다른 이름으로 사용이 가능하다.
+            ```
+            - import *as name: export default가 없는 경우 하나의 객체화 하여 사용
+                ```
+                import * as checkValue from "./util/checkValueType.js";
+
+                checkValue.isNumber(data);
+                // isNumber는 checkValueType.js 내 export되어있는 모듈
+                ```
+        - 동적 모듈 가져오기
+            ```
+            import(module_url);
+            // <script type="module">이 없더라도 작동 
+            // 함수식으로 보이나 함수가 아니다
+            // 해당 모듈을 promise형태로 반환한다
+
+            ```
+            - 프로퍼티 사용하기
+                - export default 프로퍼티
+                    ```
+                    const testModule = import(module_url);
+                    testModule.default();
+
+                    // 구조 분해 할당
+                    // const { default: property} = import(module_url) 
+                    ```
+                 - export 프로퍼티
+                    ```
+                    const testModule = import(module_url);
+                    testModule.property1();
+
+                    // 구조 분해 할당
+                    const {property1, property2} = import(module_url);
+                    property1();
+                    ```
+            
