@@ -693,6 +693,55 @@
 
 ## import, export
 
+- export
+    - 개요 
+        - 작성만 모듈을 바인딩하여 내보낼때 사용
+            ```
+            const testModule = {};
+
+            export default testModule;
+            ```
+    - 응용
+        - export
+            - 특정 모듈을 선언한 이름으로 내보낼때 사용
+            - 한 파일내 복수로 존재할 수 있다
+            - 선언과 동시에 내보낼 수 있다
+                ```
+                // 선언과 동시에 내보내기
+                export const testModule1 = {};
+                export const testModule2 = {};
+                export const testModule3 = {};
+                ```
+            - 객체 내 프로퍼티형태로 내보낼 수 있다.
+                ```
+                const testModule1 = {};
+                const testModule2 = {};
+                const testModule3 = {};
+
+                export { testModule1, testModule2, testModule3 }
+                ```
+            - 해당 파일을 가져오기(import)를 하는 경우 객체로 받아 사용하기에 객체내 프로퍼티로써 사용 가능하다.(선언한 이름 => 프로퍼티명)
+            ```
+            // 내보내기
+            export const testModule = {};
+
+            import { testModule } from 'testModule_url'
+            ```
+        - export default
+            - 파일내 모듈을 내보낼때 사용
+            - 한 파일내 반드시 하나의 모듈을 내보낼 수 있으며 선언한 모듈의 데이터형으로 내보내진다.
+                ```
+                const testModule1 = {};
+                const testModule2 = {};
+
+                export default testModule1;
+                export default testModule2;
+                // 복수로 내보낼 수 없기에 에러
+                // 복수로 내보내는 경우 export를 사용한다.
+
+                ```
+            - 내보내는 모듈의 경우 데이터형은 바인딩되나 이름은 바인되지않는다 => import시 네이밍이 가능
+
 - import
     - 개요  
         - 다른 모듈에서 내보낸 바인딩을 가져올때 사용
