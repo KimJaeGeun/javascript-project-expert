@@ -28,6 +28,12 @@ function sortFunc(type, a, b) {
             }
             
         };
+        case "sn": {
+            const stringNumA = a.match(/(?:\d+)/g);
+            const stringNumB = b.match(/(?:\d+)/g);
+            
+            return Number(stringNumA[0]) - Number(stringNumB[0]);
+        };
         case "n": return a - b;
     }
 }
